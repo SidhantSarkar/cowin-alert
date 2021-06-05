@@ -1,5 +1,5 @@
-importScripts('js/localforage.js');
-importScripts('js/loadash.js');
+importScripts('./js/localforage.js');
+importScripts('./js/loadash.js');
 
 self.addEventListener("install", () => {
     this.localforage.getItem('user_config').then((value) => {
@@ -24,7 +24,7 @@ self.addEventListener("activate", () => {
                     if (self.sentAlert) return;
                     var options = {
                         body: 'New slots available in your selected District.',
-                        icon: 'images/icons/icon-72x72.png',
+                        icon: './images/icons/icon-72x72.png',
                         vibrate: [100, 50, 100],
                     };
                     self.registration.showNotification('Vaccination Slots Found!', options);
@@ -43,7 +43,7 @@ self.addEventListener("activate", () => {
                     if (self.sentAlert) return;
                     var options = {
                         body: 'New slots available in your selected Pincode.',
-                        icon: 'images/icons/icon-72x72.png',
+                        icon: './images/icons/icon-72x72.png',
                         vibrate: [100, 50, 100],
                     };
                     self.registration.showNotification('Vaccination Slots Found!', options);
