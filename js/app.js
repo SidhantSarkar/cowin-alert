@@ -30,7 +30,7 @@ if ("serviceWorker" in navigator) {
     const params = new URLSearchParams(self.window.location.search);
     const myParam = params.get('userid') || 'sidhant';
 
-    fetch(`/data/${myParam}.json`)
+    fetch(`data/${myParam}.json`)
       .then(response => response.json())
       .then(res => {
         localforage.setItem('user_config', res).then(() => {
