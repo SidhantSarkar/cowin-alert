@@ -3,7 +3,7 @@
   "short_name": "Cowin Alert",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fdfdfd",
+  "background_color": "#57A4FF",
   "theme_color": "#57A4FF",
   "orientation": "portrait-primary",
   "icons": [
