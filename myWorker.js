@@ -13,52 +13,49 @@ self.addEventListener("install", () => {
 self.skipWaiting();
 
 self.addEventListener("activate", (e) => {
-    const mainLogic = () => {
-        setInterval(() => {
-            console.log('Starting Proc');
-            self.sentAlert = false;
-            const currDate = new Date().toLocaleDateString('en-GB').replaceAll("/", "-");
-            fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${self.userConfig.district}&date=${currDate}`)
-                .then(response => response.json())
-                .then(res => {
-                    this.localforage.getItem('district_data').then((value) => {
-                        if (value && _.isEqual(value, res)) return;
-                        this.localforage.setItem('district_data', { ...res, 'last_update': new Date().toISOString() });
-                        if (self.sentAlert) return;
-                        var options = {
-                            body: 'New slots available in your selected District.',
-                            icon: './images/icons/icon-72x72.png',
-                            vibrate: [100, 50, 100],
-                        };
-                        self.registration.showNotification('Vaccination Slots Found!', options);
-                        self.sentAlert = true;
-                    }).catch(function (err) {
-                        console.log(err);
-                    });
-                })
-                .catch(err => console.error(err));
-            fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${self.userConfig.pincode}&date=${currDate}`)
-                .then(response => response.json())
-                .then(res => {
-                    this.localforage.getItem('pincode_data').then((value) => {
-                        if (value && _.isEqual(value, res)) return;
-                        this.localforage.setItem('pincode_data', { ...res, 'last_update': new Date().toISOString() });
-                        if (self.sentAlert) return;
-                        var options = {
-                            body: 'New slots available in your selected Pincode.',
-                            icon: './images/icons/icon-72x72.png',
-                            vibrate: [100, 50, 100],
-                        };
-                        self.registration.showNotification('Vaccination Slots Found!', options);
-                        self.sentAlert = true;
-                    }).catch(function (err) {
-                        console.log(err);
-                    });
-                })
-                .catch(err => console.error(err));
-        }, 30 * 1000);
-    }
-    e.waitUntil(mainLogic);
+    setInterval(() => {
+        console.log('Starting Proc');
+        self.sentAlert = false;
+        const currDate = new Date().toLocaleDateString('en-GB').replaceAll("/", "-");
+        fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${self.userConfig.district}&date=${currDate}`)
+            .then(response => response.json())
+            .then(res => {
+                this.localforage.getItem('district_data').then((value) => {
+                    if (value && _.isEqual(value, res)) return;
+                    this.localforage.setItem('district_data', { ...res, 'last_update': new Date().toISOString() });
+                    if (self.sentAlert) return;
+                    var options = {
+                        body: 'New slots available in your selected District.',
+                        icon: './images/icons/icon-72x72.png',
+                        vibrate: [100, 50, 100],
+                    };
+                    self.registration.showNotification('Vaccination Slots Found!', options);
+                    self.sentAlert = true;
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            })
+            .catch(err => console.error(err));
+        fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${self.userConfig.pincode}&date=${currDate}`)
+            .then(response => response.json())
+            .then(res => {
+                this.localforage.getItem('pincode_data').then((value) => {
+                    if (value && _.isEqual(value, res)) return;
+                    this.localforage.setItem('pincode_data', { ...res, 'last_update': new Date().toISOString() });
+                    if (self.sentAlert) return;
+                    var options = {
+                        body: 'New slots available in your selected Pincode.',
+                        icon: './images/icons/icon-72x72.png',
+                        vibrate: [100, 50, 100],
+                    };
+                    self.registration.showNotification('Vaccination Slots Found!', options);
+                    self.sentAlert = true;
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            })
+            .catch(err => console.error(err));
+    }, 30 * 1000);
 
 })
 // self.addEventListener('periodicsync', event => {
