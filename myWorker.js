@@ -2,6 +2,7 @@ importScripts('./js/localforage.js');
 importScripts('./js/loadash.js');
 
 self.addEventListener("install", () => {
+    console.log('Installed');
     this.localforage.getItem('user_config').then((value) => {
         self.userConfig = value;
     }).catch(function (err) {
@@ -13,6 +14,7 @@ self.skipWaiting();
 
 self.addEventListener("activate", () => {
     setInterval(() => {
+        console.log('Starting Proc');
         self.sentAlert = false;
         const currDate = new Date().toLocaleDateString('en-GB').replaceAll("/", "-");
         fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${self.userConfig.district}&date=${currDate}`)

@@ -36,7 +36,7 @@ if ("serviceWorker" in navigator) {
         localforage.setItem('user_config', res).then(() => {
 
           navigator.serviceWorker
-            .register('./myWorker.js', {scope: './'})
+            .register('./myWorker.js')
             .then(() => {
               console.log("service worker registered");
             })
